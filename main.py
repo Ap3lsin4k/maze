@@ -20,25 +20,30 @@ def _find_distance(maze, dist, ij):
         except IndexError:
             return False
     queue = [ij]
+    visited = set()
+
     def move(i, j):
         if _is_empty(i, j):
-            dist[i][j] = distance
-            queue.append((i, j))
+            if not dist[i][j]:
+                dist[i][j] = distance
+                queue.append((i, j))
+                visited.add((i, j))
+    distance = 0
+    try:
+        while queue[0]:
+            i, j = queue[0]
+            distance += 1
+            queue.pop(0)
 
+            move(i, j + 1)
+            move(i + 1, j)
+            move(i, j - 1)
+            move(i - 1, j)
 
-    i, j = queue[0]
-    distance = 1
+    except IndexError:
+        return dist
 
-    queue.pop(0)
-
-    move(i, j + 1)
-    move(i + 1, j)
-    move(i, j - 1)
-    move(i - 1, j)
-
-    distance = 2
-    i, j = queue[0]
-    move(i + 1, j)
-    move(i, j+1)
-
-    return dist
+    # move(i + 1, j)
+    # move(i, j + 1)
+    #
+    # return dist
