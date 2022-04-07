@@ -54,3 +54,11 @@ def test_unreachable():
     actual = [[0, 1, 0]]
 
     assert find_distance(actual, 0, 0) == [[0, -1, 0]]
+
+
+def test_immutable_input():
+    find_distance(((0,),))
+
+
+def test_3_by_3():
+    maze = (())
